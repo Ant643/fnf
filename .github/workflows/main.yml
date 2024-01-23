@@ -106,3 +106,6 @@ jobs:
         with:
           name: macBuild
           path: export/release/macos/bin
+              - name: Upload files to a GitHub release
+                uses: svenstaro/upload-release-action@2.7.0
+            
