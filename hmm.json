@@ -91,7 +91,7 @@
       "name": "extension-androidtools",
       "type": "haxelib",
       "version": null
-    }.
+    },
     {
       "name": "hscript",
       "type": "haxelib",
