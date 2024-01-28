@@ -4,8 +4,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "main",
-      "url": "https://github.com/mcagabe19-stuff/lime"
+      "ref": "8.0.1",
+      "url": "https://github.com/Ant643/lime/"
     },
     {
       "name": "openfl",
@@ -44,7 +44,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/mcagabe19-stuff/hxCodec"
+      "url": "https://github.com/polybiusproxy/hxCodec.git"
     },
     {
       "name": "hxvlc",
@@ -55,8 +55,10 @@
     },
     {
       "name": "SScript",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/Ant643/SScript-0.7.7"
     },
     {
       "name": "hxcpp-debug-server",
@@ -70,8 +72,10 @@
     },
     {
       "name": "hxdiscord_rpc",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": ""
     },
     {
       "name": "linc_luajit",
