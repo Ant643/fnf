@@ -9,8 +9,10 @@
     },
     {
       "name": "openfl",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "9.3.0",
+      "url": "https://github.com/Ant643/openfl"
     },
     {
       "name": "flixel",
