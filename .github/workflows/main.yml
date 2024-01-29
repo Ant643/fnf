@@ -104,8 +104,8 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: macBuild
-          path: export/release/macos/bin
-              - name: Upload files to a GitHub release
-                uses: svenstaro/upload-release-action@2.7.0
+             name: macBuild
+             path: export/release/macos/bin
+             -name: Upload files to a GitHub release
+             uses: svenstaro/upload-release-action@2.7.0
             
