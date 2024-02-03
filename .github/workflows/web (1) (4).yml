@@ -1,0 +1,88 @@
+name: Web
+on: workflow_dispatch
+jobs:
+  HTML5:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.2.5
+
+      - name: Install Libraries
+        run: |
+          sudo apt-get install libvlc-dev --quiet
+          sudo apt-get install libvlccore-dev --quiet
+          haxelib setup ~/haxelib
+          haxelib install hxcpp 4.2.1 > /dev/null  --quiet
+          haxelib install lime 7.9.0 --quiet
+          haxelib install openfl 9.1.0 --quiet
+          haxelib --never install flixel 4.11.0 --quiet
+          haxelib run lime setup flixel --quiet
+          haxelib run lime setup --quiet
+          haxelib install flixel-tools --quiet
+          haxelib install flixel-ui 2.4.0 --quiet
+          haxelib install flixel-addons 2.11.0 --quiet
+          haxelib install tjson --quiet
+          haxelib install hxjsonast --quiet
+          haxelib git hxCodec https://github.com/Ant643/hxCodec- hxCodecPsych0.6.2 --quiet
+          haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit --quiet
+          haxelib install hscript 2.4.0 --quiet
+          haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex --quiet
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
+          haxelib install hxcpp-debug-server --quiet
+          haxelib list
+          
+      - name: Compile
+        run: haxelib run lime build html5 -final
+
+      - name: Upload Artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: html5Build
+          path: export/release/html5/bin
+          if-no-files-found: error
+  Emscripten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Emscripten Toolchain
+        run: |
+          cd ~
+          git clone --quiet https://github.com/emscripten-core/emsdk.git > /dev/null
+          cd emsdk
+          ./emsdk install latest
+          ./emsdk activate latest
+          chmod +x ./emsdk_env.sh && echo 'source "/home/runner/emsdk/emsdk_env.sh"' >> $HOME/.bash_profile
+          echo "EMSDK=$HOME/emsdk:$HOME/emsdk/upstream/emscripten" >> $GITHUB_ENV
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: latest
+
+      - name: Install Libraries
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hmm --quiet
+          haxelib run hmm install --quiet
+
+      - name: Configure Emscripten
+        run: haxelib run lime config EMSCRIPTEN_SDK $EMSDK
+
+      - name: Compile
+        run: PATH=$EMSDK:$PATH haxelib run lime build emscripten -final
+
+      - name: Upload Artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: emscriptenBuild
+          path: export/release/webassembly/bin
+          if-no-files-found: error
